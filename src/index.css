@@ -91,7 +91,8 @@ ol li {
     background-color: rgb(214, 211, 211);
 }
 
-.todo-style .fa-times {
+.todo-style .fa-times,
+.todo-style .deleteIcon {
     width: 20px;
     height: 20px;
     display: flex;
@@ -102,6 +103,13 @@ ol li {
     margin: 0 15px 0 35px;
     color: #fff;
     box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+}
+
+.todo-style .deleteIcon {
+    margin-left: 90px;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
 }
 
 .todo-style .fa-times:hover {
@@ -125,7 +133,7 @@ ol li {
         align-items: center;
     }
 
-    button {
+    .button {
         margin-left: 5px;
         min-height: 40px;
         width: 40px;
