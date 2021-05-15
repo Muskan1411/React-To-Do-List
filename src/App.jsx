@@ -1,42 +1,46 @@
-import React from 'react';
-
-const SlotMachine = (props) => {
-    let {x, y, z} = props;
-    if(x === y && y === z) {
-        return (
-            <>
-                <div className="slot_inner">
-                    <h1>{x} {y} {z}</h1>
-                    <h1 className="heading_style">This is matching.</h1>
-                </div>
-            </>
-        )
-    } else {
-        return (
-            <>
-                <div className="slot_inner">
-                    <h1>{x} {y} {z}</h1>
-                    <h1 className="heading_style">This is not matching.</h1>
-                </div>
-            </>
-        )
-    }
-}
+import React, { useState } from 'react';
+import ToDoList from './ToDoList';  
 
 const App = () => {
+    const [ item, setItem ] = useState('');
+    const [ itemsArr, setItemsArr ] = useState([]);
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setItem(value);
+    }
+
+    const addItem = (event) => {
+        setItemsArr((oldValues) => {
+            return [...oldValues, item];
+        })
+        setItem('');
+    }
+
+    const deleteItem = (id) => {
+        setItemsArr((oldValues) => {
+            return oldValues.filter((elem, index) => {
+                return id !== index;
+            })
+        })
+    }
+
     return (
         <>
-            <h1 className="heading_style"> Welcome to <span style={{fontWeight: 'bold'}}> Slot Machine Game </span> </h1>
-            <div class="slotmachine">
-                <SlotMachine x='😄' y='😄' z='😄'/>
-                <hr/>
-                <SlotMachine x='😄' y='🎅' z='🎅'/>
-                <hr/>
-                <SlotMachine x='❤️' y='❤️' z='❤️'/>
-                <hr/>
-                <SlotMachine x='🍎' y='🍍' z='🍎'/>
-                <hr/>
-                
+            <div className='main_div'>
+                <div className='center_div'>
+                    <br/>
+                    <h1>To-do list</h1>
+                    <br/>
+                    <input type='text' placeholder='Add an item' value={item} onChange={handleInputChange} />
+                    <button onClick={addItem}>+</button>
+
+                    <ol>
+                        {itemsArr.map((item, index) => {
+                            return <ToDoList key={index} id={index} itemVal={item} onRemoveItem={deleteItem}/>
+                        })}
+                    </ol>
+                </div>
             </div>
         </>
     )
