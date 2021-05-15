@@ -4,11 +4,16 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
 const App = () => {
+    const [ addButtonDisabled, setAddButtonDisabled] = useState(true);
     const [ item, setItem ] = useState('');
     const [ itemsArr, setItemsArr ] = useState([]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        if(value.length > 0) 
+            setAddButtonDisabled(false);
+        else
+            setAddButtonDisabled(true);
         setItem(value);
     }
 
@@ -17,6 +22,7 @@ const App = () => {
             return [...oldValues, item];
         })
         setItem('');
+        setAddButtonDisabled(true);
     }
 
     const deleteItem = (id) => {
@@ -35,7 +41,7 @@ const App = () => {
                     <h1>To-do list</h1>
                     <br/>
                     <input type='text' placeholder='Add an item' value={item} onChange={handleInputChange} />
-                    <Button className='button' onClick={addItem}><AddIcon /></Button>
+                    <Button className='button' onClick={addItem} disabled={addButtonDisabled}><AddIcon /></Button>
 
                     <ol>
                         {itemsArr.map((item, index) => {
